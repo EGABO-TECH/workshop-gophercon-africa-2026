@@ -13,9 +13,10 @@ import "workshop/web/views/components"
 type BaseProps struct {
 	Title       string
 	Description string
+	CurrentPage string
 }
 
-func Base(props BaseProps) templ.Component {
+func NavLink(label string, href string, class string, current bool) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
@@ -36,37 +37,161 @@ func Base(props BaseProps) templ.Component {
 			templ_7745c5c3_Var1 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
+		if current {
+			var templ_7745c5c3_Var2 = []any{class}
+			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var2...)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<a href=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var3 templ.SafeURL
+			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinURLErrs(templ.URL(href))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout/layout.templ`, Line: 13, Col: 27}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" class=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var4 string
+			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.CSSClasses(templ_7745c5c3_Var2).String())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout/layout.templ`, Line: 1, Col: 0}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var4)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" aria-current=\"page\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var5 string
+			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(label)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout/layout.templ`, Line: 13, Col: 73}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "</a>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		} else {
+			var templ_7745c5c3_Var6 = []any{class}
+			templ_7745c5c3_Err = templ.RenderCSSItems(ctx, templ_7745c5c3_Buffer, templ_7745c5c3_Var6...)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<a href=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var7 templ.SafeURL
+			templ_7745c5c3_Var7, templ_7745c5c3_Err = templ.JoinURLErrs(templ.URL(href))
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout/layout.templ`, Line: 15, Col: 27}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var7))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "\" class=\"")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var8 string
+			templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.ResolveAttributeValue(templ.CSSClasses(templ_7745c5c3_Var6).String())
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout/layout.templ`, Line: 1, Col: 0}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var8)
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "\">")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			var templ_7745c5c3_Var9 string
+			templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(label)
+			if templ_7745c5c3_Err != nil {
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout/layout.templ`, Line: 15, Col: 53}
+			}
+			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</a>")
+			if templ_7745c5c3_Err != nil {
+				return templ_7745c5c3_Err
+			}
+		}
+		return nil
+	})
+}
+
+func Base(props BaseProps) templ.Component {
+	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+		templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
+		if templ_7745c5c3_CtxErr := ctx.Err(); templ_7745c5c3_CtxErr != nil {
+			return templ_7745c5c3_CtxErr
+		}
+		templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
+		if !templ_7745c5c3_IsBuffer {
+			defer func() {
+				templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
+				if templ_7745c5c3_Err == nil {
+					templ_7745c5c3_Err = templ_7745c5c3_BufErr
+				}
+			}()
+		}
+		ctx = templ.InitializeContext(ctx)
+		templ_7745c5c3_Var10 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var10 == nil {
+			templ_7745c5c3_Var10 = templ.NopComponent
+		}
+		ctx = templ.ClearChildren(ctx)
 		description := props.Description
 		if description == "" {
 			description = "Explore wildlife observations, locations and photographs in the AfriTour field archive."
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<!doctype html><html lang=\"en\" data-theme=\"dark\" class=\"dark\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "<!doctype html><html lang=\"en\" data-theme=\"dark\" class=\"dark\"><head><meta charset=\"utf-8\"><meta name=\"viewport\" content=\"width=device-width, initial-scale=1\"><title>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var2 string
-		templ_7745c5c3_Var2, templ_7745c5c3_Err = templ.JoinStringErrs(props.Title)
+		var templ_7745c5c3_Var11 string
+		templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(props.Title)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout/layout.templ`, Line: 20, Col: 23}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout/layout.templ`, Line: 29, Col: 23}
 		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var2))
-		if templ_7745c5c3_Err != nil {
-			return templ_7745c5c3_Err
-		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, " · AfriTour</title><meta name=\"description\" content=\"")
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.ResolveAttributeValue(description)
-		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout/layout.templ`, Line: 21, Col: 49}
-		}
-		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var3)
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, " · AfriTour</title><meta name=\"description\" content=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\"><link rel=\"icon\" href=\"/assets/images/afritour-safari-sunset-icon.png\" type=\"image/png\" sizes=\"512x512\"><link rel=\"apple-touch-icon\" href=\"/assets/images/afritour-safari-sunset-icon.png\"><link rel=\"manifest\" href=\"/assets/manifest.json\"><meta name=\"theme-color\" content=\"#111812\"><meta name=\"view-transition\" content=\"same-origin\"><script>\n\t\t\t\t(function() {\n\t\t\t\t\ttry {\n\t\t\t\t\t\tvar savedTheme = localStorage.getItem('afritour-theme');\n\t\t\t\t\t\tif (savedTheme) {\n\t\t\t\t\t\t\tdocument.documentElement.setAttribute('data-theme', savedTheme);\n\t\t\t\t\t\t\tif (savedTheme === 'light') {\n\t\t\t\t\t\t\t\tdocument.documentElement.classList.remove('dark');\n\t\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t\tdocument.documentElement.classList.add('dark');\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t} catch(e) {}\n\t\t\t\t\tdocument.documentElement.classList.add('js');\n\t\t\t\t})();\n\t\t\t</script><!-- Editorial serif, modern sans and field-note mono --><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><link href=\"https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\"><!-- Leaflet & MarkerCluster CSS --><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css\" integrity=\"sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"><link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css\" integrity=\"sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV\" crossorigin=\"anonymous\"><link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css\" integrity=\"sha384-wgw+aLYNQ7dlhK47ZPK7FRACiq7ROZwgFNg0m04avm4CaXS+Z9Y7nMu8yNjBKYC+\" crossorigin=\"anonymous\"><!-- Swiper CSS --><link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.css\" integrity=\"sha384-gAPqlBuTCdtVcYt9ocMOYWrnBZ4XSL6q+4eXqwNycOr4iFczhNKtnYhF3NEXJM51\" crossorigin=\"anonymous\"><!-- Component & App Styles --><link rel=\"stylesheet\" href=\"/assets/css/app.css\"><link rel=\"stylesheet\" href=\"/assets/css/weather.css\"><link rel=\"stylesheet\" href=\"/assets/css/charts.css\"><link rel=\"stylesheet\" href=\"/assets/css/map.css\"><link rel=\"stylesheet\" href=\"/assets/css/filter.css\"><link rel=\"stylesheet\" href=\"/assets/css/swiper.css\"><link rel=\"stylesheet\" href=\"/assets/css/lightbox.css\"><link rel=\"stylesheet\" href=\"/assets/css/reveal.css\"></head><body>")
+		var templ_7745c5c3_Var12 string
+		templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.ResolveAttributeValue(description)
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/layout/layout.templ`, Line: 30, Col: 49}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ_7745c5c3_Var12)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "\"><link rel=\"icon\" href=\"/assets/images/afritour-safari-sunset-icon.png\" type=\"image/png\" sizes=\"512x512\"><link rel=\"apple-touch-icon\" href=\"/assets/images/afritour-safari-sunset-icon.png\"><link rel=\"manifest\" href=\"/assets/manifest.json\"><meta name=\"theme-color\" content=\"#111812\"><meta name=\"view-transition\" content=\"same-origin\"><script>\n\t\t\t\t(function() {\n\t\t\t\t\ttry {\n\t\t\t\t\t\tvar savedTheme = localStorage.getItem('afritour-theme');\n\t\t\t\t\t\tif (savedTheme) {\n\t\t\t\t\t\t\tdocument.documentElement.setAttribute('data-theme', savedTheme);\n\t\t\t\t\t\t\tif (savedTheme === 'light') {\n\t\t\t\t\t\t\t\tdocument.documentElement.classList.remove('dark');\n\t\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t\tdocument.documentElement.classList.add('dark');\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t} catch(e) {}\n\t\t\t\t\tdocument.documentElement.classList.add('js');\n\t\t\t\t})();\n\t\t\t</script><!-- Editorial serif, modern sans and field-note mono --><link rel=\"preconnect\" href=\"https://fonts.googleapis.com\"><link rel=\"preconnect\" href=\"https://fonts.gstatic.com\" crossorigin><link href=\"https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Outfit:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap\" rel=\"stylesheet\"><!-- Leaflet & MarkerCluster CSS --><link rel=\"stylesheet\" href=\"https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css\" integrity=\"sha512-h9FcoyWjHcOcmEVkxOfTLnmZFWIH0iZhZT1H2TbOq55xssQGEJHEaIm+PgoUaZbRvQTNTluNOEfb1ZRy6D3BOw==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\"><link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.css\" integrity=\"sha384-pmjIAcz2bAn0xukfxADbZIb3t8oRT9Sv0rvO+BR5Csr6Dhqq+nZs59P0pPKQJkEV\" crossorigin=\"anonymous\"><link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css\" integrity=\"sha384-wgw+aLYNQ7dlhK47ZPK7FRACiq7ROZwgFNg0m04avm4CaXS+Z9Y7nMu8yNjBKYC+\" crossorigin=\"anonymous\"><!-- Swiper CSS --><link rel=\"stylesheet\" href=\"https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.css\" integrity=\"sha384-gAPqlBuTCdtVcYt9ocMOYWrnBZ4XSL6q+4eXqwNycOr4iFczhNKtnYhF3NEXJM51\" crossorigin=\"anonymous\"><!-- Component & App Styles --><link rel=\"stylesheet\" href=\"/assets/css/app.css\"><link rel=\"stylesheet\" href=\"/assets/css/weather.css\"><link rel=\"stylesheet\" href=\"/assets/css/charts.css\"><link rel=\"stylesheet\" href=\"/assets/css/map.css\"><link rel=\"stylesheet\" href=\"/assets/css/filter.css\"><link rel=\"stylesheet\" href=\"/assets/css/swiper.css\"><link rel=\"stylesheet\" href=\"/assets/css/lightbox.css\"><link rel=\"stylesheet\" href=\"/assets/css/reveal.css\"><link rel=\"stylesheet\" href=\"/assets/css/transitions.css\"></head><body>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -74,15 +199,55 @@ func Base(props BaseProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<a class=\"skip-link\" href=\"#main-content\">Skip to content</a><!-- Sticky Navigation --><header class=\"site-header\" id=\"site-header\"><div class=\"site-header__container\"><a class=\"site-brand\" href=\"/#hero\" aria-label=\"AfriTour Home\"><img src=\"/assets/images/afritour-safari-sunset-logo.png\" alt=\"AfriTour wildlife field archive\" width=\"1746\" height=\"608\" class=\"site-brand__logo\"></a><nav class=\"site-nav\" id=\"site-nav\" aria-label=\"Main Navigation\"><a href=\"/#highlights\" class=\"site-nav__link\">Photographs</a> <a href=\"/#sightings\" class=\"site-nav__link\">Records</a> <a href=\"/#map-section\" class=\"site-nav__link\">Map</a> <a href=\"/#analytics\" class=\"site-nav__link\">Trends</a></nav><div class=\"site-header__actions\"><!-- Theme Switcher --><button type=\"button\" class=\"theme-toggle-btn\" id=\"theme-toggle-btn\" aria-label=\"Toggle Light/Dark Theme\" title=\"Toggle Light/Dark Mode\"><svg class=\"icon-sun\" viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"5\"></circle> <line x1=\"12\" y1=\"1\" x2=\"12\" y2=\"3\"></line> <line x1=\"12\" y1=\"21\" x2=\"12\" y2=\"23\"></line> <line x1=\"4.22\" y1=\"4.22\" x2=\"5.64\" y2=\"5.64\"></line> <line x1=\"18.36\" y1=\"18.36\" x2=\"19.78\" y2=\"19.78\"></line> <line x1=\"1\" y1=\"12\" x2=\"3\" y2=\"12\"></line> <line x1=\"21\" y1=\"12\" x2=\"23\" y2=\"12\"></line> <line x1=\"4.22\" y1=\"19.78\" x2=\"5.64\" y2=\"18.36\"></line> <line x1=\"18.36\" y1=\"5.64\" x2=\"19.78\" y2=\"4.22\"></line></svg> <svg class=\"icon-moon\" viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"></path></svg></button><!-- Wishlist Button --><button type=\"button\" class=\"wishlist-nav-btn\" id=\"nav-wishlist-btn\" aria-label=\"View saved observations\" onclick=\"document.getElementById('wishlist-modal').showModal()\" title=\"View saved observations\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"></path></svg> <span class=\"wishlist-nav-text\">Saved</span> <span id=\"nav-wishlist-count\" class=\"wishlist-badge\" hidden>0</span></button><!-- Mobile Menu Toggle Button --><button type=\"button\" class=\"mobile-menu-btn\" id=\"mobile-menu-btn\" aria-label=\"Toggle Navigation Menu\" aria-controls=\"mobile-nav-drawer\" aria-expanded=\"false\"><svg class=\"menu-icon-bars\" viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"3\" y1=\"12\" x2=\"21\" y2=\"12\"></line> <line x1=\"3\" y1=\"6\" x2=\"21\" y2=\"6\"></line> <line x1=\"3\" y1=\"18\" x2=\"21\" y2=\"18\"></line></svg> <svg class=\"menu-icon-close\" viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"></line> <line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"></line></svg></button></div></div><!-- Mobile Navigation Dropdown Drawer --><div class=\"mobile-nav-drawer\" id=\"mobile-nav-drawer\" hidden><a href=\"/#highlights\" class=\"mobile-nav__link\">Photographs</a> <a href=\"/#sightings\" class=\"mobile-nav__link\">Records</a> <a href=\"/#map-section\" class=\"mobile-nav__link\">Map</a> <a href=\"/#analytics\" class=\"mobile-nav__link\">Trends</a></div></header><!-- Main Content --><main class=\"site-main\" id=\"main-content\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<a class=\"skip-link\" href=\"#main-content\">Skip to content</a><!-- Sticky Navigation --><header class=\"site-header\" id=\"site-header\"><div class=\"site-header__container\"><a class=\"site-brand\" href=\"/\" aria-label=\"AfriTour Home\"><img src=\"/assets/images/afritour-safari-sunset-logo.png\" alt=\"AfriTour wildlife field archive\" width=\"1746\" height=\"608\" class=\"site-brand__logo\"></a><nav class=\"site-nav\" id=\"site-nav\" aria-label=\"Main Navigation\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templ_7745c5c3_Var1.Render(ctx, templ_7745c5c3_Buffer)
+		templ_7745c5c3_Err = NavLink("Photographs", "/photos", "site-nav__link", props.CurrentPage == "photos").Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</main><!-- Photo lightbox and saved-record dialog -->")
+		templ_7745c5c3_Err = NavLink("Records", "/records", "site-nav__link", props.CurrentPage == "records").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = NavLink("Map", "/map", "site-nav__link", props.CurrentPage == "map").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = NavLink("Trends", "/trends", "site-nav__link", props.CurrentPage == "trends").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "</nav><div class=\"site-header__actions\"><!-- Theme Switcher --><button type=\"button\" class=\"theme-toggle-btn\" id=\"theme-toggle-btn\" aria-label=\"Toggle Light/Dark Theme\" title=\"Toggle Light/Dark Mode\"><svg class=\"icon-sun\" viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><circle cx=\"12\" cy=\"12\" r=\"5\"></circle> <line x1=\"12\" y1=\"1\" x2=\"12\" y2=\"3\"></line> <line x1=\"12\" y1=\"21\" x2=\"12\" y2=\"23\"></line> <line x1=\"4.22\" y1=\"4.22\" x2=\"5.64\" y2=\"5.64\"></line> <line x1=\"18.36\" y1=\"18.36\" x2=\"19.78\" y2=\"19.78\"></line> <line x1=\"1\" y1=\"12\" x2=\"3\" y2=\"12\"></line> <line x1=\"21\" y1=\"12\" x2=\"23\" y2=\"12\"></line> <line x1=\"4.22\" y1=\"19.78\" x2=\"5.64\" y2=\"18.36\"></line> <line x1=\"18.36\" y1=\"5.64\" x2=\"19.78\" y2=\"4.22\"></line></svg> <svg class=\"icon-moon\" viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><path d=\"M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z\"></path></svg></button><!-- Wishlist Button --><button type=\"button\" class=\"wishlist-nav-btn\" id=\"nav-wishlist-btn\" aria-label=\"View saved observations\" onclick=\"document.getElementById('wishlist-modal').showModal()\" title=\"View saved observations\"><svg viewBox=\"0 0 24 24\" width=\"18\" height=\"18\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><path d=\"M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z\"></path></svg> <span class=\"wishlist-nav-text\">Saved</span> <span id=\"nav-wishlist-count\" class=\"wishlist-badge\" hidden>0</span></button><!-- Mobile Menu Toggle Button --><button type=\"button\" class=\"mobile-menu-btn\" id=\"mobile-menu-btn\" aria-label=\"Toggle Navigation Menu\" aria-controls=\"mobile-nav-drawer\" aria-expanded=\"false\"><svg class=\"menu-icon-bars\" viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"3\" y1=\"12\" x2=\"21\" y2=\"12\"></line> <line x1=\"3\" y1=\"6\" x2=\"21\" y2=\"6\"></line> <line x1=\"3\" y1=\"18\" x2=\"21\" y2=\"18\"></line></svg> <svg class=\"menu-icon-close\" viewBox=\"0 0 24 24\" width=\"22\" height=\"22\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\" stroke-linecap=\"round\" stroke-linejoin=\"round\"><line x1=\"18\" y1=\"6\" x2=\"6\" y2=\"18\"></line> <line x1=\"6\" y1=\"6\" x2=\"18\" y2=\"18\"></line></svg></button></div></div><!-- Mobile Navigation Dropdown Drawer --><div class=\"mobile-nav-drawer\" id=\"mobile-nav-drawer\" hidden>")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = NavLink("Photographs", "/photos", "mobile-nav__link", props.CurrentPage == "photos").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = NavLink("Records", "/records", "mobile-nav__link", props.CurrentPage == "records").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = NavLink("Map", "/map", "mobile-nav__link", props.CurrentPage == "map").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = NavLink("Trends", "/trends", "mobile-nav__link", props.CurrentPage == "trends").Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "</div></header><!-- Main Content --><main class=\"site-main\" id=\"main-content\">")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templ_7745c5c3_Var10.Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, "</main><!-- Photo lightbox and saved-record dialog -->")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -94,7 +259,7 @@ func Base(props BaseProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<!-- Site Footer --><footer class=\"site-footer\"><div class=\"site-footer__container\"><div class=\"site-footer__brand-col\"><div class=\"site-footer__brand\"><img src=\"/assets/images/afritour-safari-sunset-icon.png\" alt=\"\" width=\"36\" height=\"36\"> <span class=\"site-footer__title\">AFRITOUR</span></div><p class=\"site-footer__desc\">A searchable collection of wildlife observations, locations and associated media.</p><div class=\"site-footer__tags\"><span class=\"badge\">Wildlife</span> <span class=\"badge\">Field records</span></div></div><div class=\"site-footer__links-col\"><h4 class=\"site-footer__heading\">Explore</h4><ul class=\"site-footer__links\"><li><a href=\"/#map-section\">Observation map</a></li><li><a href=\"/#sightings\">Browse records</a></li></ul></div><div class=\"site-footer__links-col\"><h4 class=\"site-footer__heading\">About the records</h4><ul class=\"site-footer__links\"><li>Species and observer details</li><li>Recorded dates and locations</li><li>Associated photographs and media</li></ul></div><div class=\"site-footer__sources-col\"><h4 class=\"site-footer__heading\">Data source</h4><p class=\"site-footer__text\">Observation records are provided by the Global Biodiversity Information Facility (GBIF).</p></div></div><div class=\"site-footer__bottom\"><p>AfriTour · Wildlife field archive</p><a href=\"/#hero\" class=\"site-footer__back-top\">Back to top ↑</a></div></footer><!-- Scripts --><script src=\"https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js\" integrity=\"sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" defer></script><script src=\"https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js\" integrity=\"sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr\" crossorigin=\"anonymous\" defer></script><script src=\"https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.js\" integrity=\"sha384-2UI1PfnXFjVMQ7/ZDEF70CR943oH3v6uZrFQGGqJYlvhh4g6z6uVktxYbOlAczav\" crossorigin=\"anonymous\" defer></script><script src=\"/assets/js/map.js\" defer></script><script src=\"/assets/js/swiper.js\" defer></script><script src=\"/assets/js/filter.js\" defer></script><script src=\"/assets/js/lightbox.js\" defer></script><script src=\"/assets/js/reveal.js\" defer></script><script src=\"/assets/js/app.js\" defer></script></body></html>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "<!-- Site Footer --><footer class=\"site-footer\"><div class=\"site-footer__container\"><div class=\"site-footer__brand-col\"><div class=\"site-footer__brand\"><img src=\"/assets/images/afritour-safari-sunset-icon.png\" alt=\"\" width=\"36\" height=\"36\"> <span class=\"site-footer__title\">AFRITOUR</span></div><p class=\"site-footer__desc\">A searchable collection of wildlife observations, locations and associated media.</p><div class=\"site-footer__tags\"><span class=\"badge\">Wildlife</span> <span class=\"badge\">Field records</span></div></div><div class=\"site-footer__links-col\"><h4 class=\"site-footer__heading\">Explore</h4><ul class=\"site-footer__links\"><li><a href=\"/map\">Observation map</a></li><li><a href=\"/records\">Browse records</a></li><li><a href=\"/photos\">Photographs</a></li><li><a href=\"/trends\">Record trends</a></li></ul></div><div class=\"site-footer__links-col\"><h4 class=\"site-footer__heading\">About the records</h4><ul class=\"site-footer__links\"><li>Species and observer details</li><li>Recorded dates and locations</li><li>Associated photographs and media</li></ul></div><div class=\"site-footer__sources-col\"><h4 class=\"site-footer__heading\">Data source</h4><p class=\"site-footer__text\">Observation records are provided by the Global Biodiversity Information Facility (GBIF).</p></div></div><div class=\"site-footer__bottom\"><p>AfriTour · Wildlife field archive</p><a href=\"/\" class=\"site-footer__back-top\">Back to top ↑</a></div></footer><!-- Scripts --><script src=\"https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js\" integrity=\"sha512-puJW3E/qXDqYp9IfhAI54BJEaWIfloJ7JWs7OeD5i6ruC9JZL1gERT1wjtwXFlh7CjE7ZJ+/vcRZRkIYIb6p4g==\" crossorigin=\"anonymous\" referrerpolicy=\"no-referrer\" defer></script><script src=\"https://cdn.jsdelivr.net/npm/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js\" integrity=\"sha384-eXVCORTRlv4FUUgS/xmOyr66XBVraen8ATNLMESp92FKXLAMiKkerixTiBvXriZr\" crossorigin=\"anonymous\" defer></script><script src=\"https://cdn.jsdelivr.net/npm/swiper@11.2.10/swiper-bundle.min.js\" integrity=\"sha384-2UI1PfnXFjVMQ7/ZDEF70CR943oH3v6uZrFQGGqJYlvhh4g6z6uVktxYbOlAczav\" crossorigin=\"anonymous\" defer></script><script src=\"/assets/js/map.js\" defer></script><script src=\"/assets/js/swiper.js\" defer></script><script src=\"/assets/js/filter.js\" defer></script><script src=\"/assets/js/lightbox.js\" defer></script><script src=\"/assets/js/reveal.js\" defer></script><script src=\"/assets/js/app.js\" defer></script></body></html>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

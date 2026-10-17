@@ -1,0 +1,45 @@
+package pages
+
+import (
+	"workshop/internal/domain/sighting"
+	"workshop/web/views/components"
+	"workshop/web/views/layout"
+)
+
+templ Photos(sightings []sighting.Sighting) {
+	{{ items := withPhotos(sightings, len(sightings)) }}
+	@layout.Base(layout.BaseProps{
+		Title:       "Photographs",
+		Description: "Browse field photographs attached to wildlife observations in the AfriTour archive.",
+		CurrentPage: "photos",
+	}) {
+		<section class="section highlights archive-page">
+			<div class="container section__header">
+				<div>
+					<div class="section__eyebrow">01 / FIELD PHOTOGRAPHS</div>
+					<h1 class="section__title">Images from the <em class="editorial-em">archive</em></h1>
+					<p class="section__subtitle">Photographs connected to recorded wildlife observations.</p>
+				</div>
+				<a class="archive-page__back" href="/">← Archive home</a>
+			</div>
+			if len(items) == 0 {
+				<div class="container">
+					<div class="empty-state">
+						<h2>No photographs available</h2>
+						<p>Images will appear here when they are attached to observations.</p>
+					</div>
+				</div>
+			} else {
+				<div class="highlights__slider-wrap">
+					@components.Swiper(components.SwiperProps{DesktopSlides: 3, Dark: true}) {
+						for _, s := range items {
+							<div class="swiper-slide">
+								@components.SightingCard(s)
+							</div>
+						}
+					}
+				</div>
+			}
+		</section>
+	}
+}

@@ -24,6 +24,10 @@ func New(logger *slog.Logger, config config.Config, sightingsSvc *sighting.Servi
 	mux := http.NewServeMux()
 
 	mux.Handle("GET /assets/", http.FileServerFS(assetsFs(config.IsProduction())))
+	mux.Handle("GET /photos", handlers.Photos(logger, sightingsSvc))
+	mux.Handle("GET /records", handlers.Records(logger, sightingsSvc))
+	mux.Handle("GET /map", handlers.Map(logger, sightingsSvc))
+	mux.Handle("GET /trends", handlers.Trends(logger, sightingsSvc))
 	mux.Handle("GET /", handlers.Home(logger, sightingsSvc))
 
 	return mux

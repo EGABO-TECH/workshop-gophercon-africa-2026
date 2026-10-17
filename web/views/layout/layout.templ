@@ -5,6 +5,15 @@ import "workshop/web/views/components"
 type BaseProps struct {
 	Title       string
 	Description string
+	CurrentPage string
+}
+
+templ NavLink(label string, href string, class string, current bool) {
+	if current {
+		<a href={ templ.URL(href) } class={ class } aria-current="page">{ label }</a>
+	} else {
+		<a href={ templ.URL(href) } class={ class }>{ label }</a>
+	}
 }
 
 templ Base(props BaseProps) {
@@ -59,6 +68,7 @@ templ Base(props BaseProps) {
 			<link rel="stylesheet" href="/assets/css/swiper.css"/>
 			<link rel="stylesheet" href="/assets/css/lightbox.css"/>
 			<link rel="stylesheet" href="/assets/css/reveal.css"/>
+			<link rel="stylesheet" href="/assets/css/transitions.css"/>
 		</head>
 		<body>
 			@components.WeatherIcons()
@@ -66,14 +76,14 @@ templ Base(props BaseProps) {
 			<!-- Sticky Navigation -->
 			<header class="site-header" id="site-header">
 				<div class="site-header__container">
-					<a class="site-brand" href="/#hero" aria-label="AfriTour Home">
+					<a class="site-brand" href="/" aria-label="AfriTour Home">
 						<img src="/assets/images/afritour-safari-sunset-logo.png" alt="AfriTour wildlife field archive" width="1746" height="608" class="site-brand__logo"/>
 					</a>
 					<nav class="site-nav" id="site-nav" aria-label="Main Navigation">
-						<a href="/#highlights" class="site-nav__link">Photographs</a>
-						<a href="/#sightings" class="site-nav__link">Records</a>
-						<a href="/#map-section" class="site-nav__link">Map</a>
-						<a href="/#analytics" class="site-nav__link">Trends</a>
+						@NavLink("Photographs", "/photos", "site-nav__link", props.CurrentPage == "photos")
+						@NavLink("Records", "/records", "site-nav__link", props.CurrentPage == "records")
+						@NavLink("Map", "/map", "site-nav__link", props.CurrentPage == "map")
+						@NavLink("Trends", "/trends", "site-nav__link", props.CurrentPage == "trends")
 					</nav>
 					<div class="site-header__actions">
 						<!-- Theme Switcher -->
@@ -120,10 +130,10 @@ templ Base(props BaseProps) {
 
 				<!-- Mobile Navigation Dropdown Drawer -->
 				<div class="mobile-nav-drawer" id="mobile-nav-drawer" hidden>
-					<a href="/#highlights" class="mobile-nav__link">Photographs</a>
-					<a href="/#sightings" class="mobile-nav__link">Records</a>
-					<a href="/#map-section" class="mobile-nav__link">Map</a>
-					<a href="/#analytics" class="mobile-nav__link">Trends</a>
+					@NavLink("Photographs", "/photos", "mobile-nav__link", props.CurrentPage == "photos")
+					@NavLink("Records", "/records", "mobile-nav__link", props.CurrentPage == "records")
+					@NavLink("Map", "/map", "mobile-nav__link", props.CurrentPage == "map")
+					@NavLink("Trends", "/trends", "mobile-nav__link", props.CurrentPage == "trends")
 				</div>
 			</header>
 			<!-- Main Content -->
@@ -150,8 +160,10 @@ templ Base(props BaseProps) {
 					<div class="site-footer__links-col">
 						<h4 class="site-footer__heading">Explore</h4>
 						<ul class="site-footer__links">
-							<li><a href="/#map-section">Observation map</a></li>
-							<li><a href="/#sightings">Browse records</a></li>
+							<li><a href="/map">Observation map</a></li>
+							<li><a href="/records">Browse records</a></li>
+							<li><a href="/photos">Photographs</a></li>
+							<li><a href="/trends">Record trends</a></li>
 						</ul>
 					</div>
 					<div class="site-footer__links-col">
@@ -169,7 +181,7 @@ templ Base(props BaseProps) {
 				</div>
 				<div class="site-footer__bottom">
 					<p>AfriTour · Wildlife field archive</p>
-					<a href="/#hero" class="site-footer__back-top">Back to top ↑</a>
+					<a href="/" class="site-footer__back-top">Back to top ↑</a>
 				</div>
 			</footer>
 			<!-- Scripts -->

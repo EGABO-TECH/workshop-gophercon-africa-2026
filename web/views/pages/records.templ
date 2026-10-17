@@ -1,0 +1,62 @@
+package pages
+
+import (
+	"workshop/internal/domain/sighting"
+	"workshop/web/views/components"
+	"workshop/web/views/layout"
+)
+
+templ Records(sightings []sighting.Sighting) {
+	{{ comparePayload := components.BuildComparePayload(sightings) }}
+	@layout.Base(layout.BaseProps{
+		Title:       "Observation records",
+		Description: "Search and filter species, locations and observers in the AfriTour wildlife archive.",
+		CurrentPage: "records",
+	}) {
+		<section class="section sightings-section archive-page">
+			<div class="container section__header">
+				<div>
+					<div class="section__eyebrow">02 / OBSERVATION ARCHIVE</div>
+					<h1 class="section__title">Wildlife <em class="editorial-em">records</em></h1>
+					<p class="section__subtitle">Filter observations by species or country, or search by observer and species name.</p>
+				</div>
+				<a class="archive-page__back" href="/">← Archive home</a>
+			</div>
+			<div class="container">
+				@components.Filter(components.FilterProps{
+					Target: "sightings-list",
+					Search: true,
+					Groups: []components.FilterGroup{
+						{
+							Key:     "animal",
+							Label:   "Species",
+							Options: components.FilterOptions(sightings, 10, components.Animal),
+						},
+						{
+							Key:     "country",
+							Label:   "Countries",
+							Options: components.FilterOptions(sightings, 8, components.Country),
+						},
+					},
+				})
+				if len(sightings) == 0 {
+					<div class="empty-state">
+						<h2>No observations in the archive</h2>
+						<p>Records will appear here when they are available.</p>
+					</div>
+				} else {
+					<ul id="sightings-list" class="sightings-grid">
+						for _, s := range sightings {
+							<li class="sightings-grid__item" { components.FilterAttrs(s)... }>
+								@components.SightingCard(s)
+							</li>
+						}
+					</ul>
+				}
+			</div>
+		</section>
+		if len(sightings) > 0 {
+			@components.CompareSection(comparePayload)
+		}
+	}
+}

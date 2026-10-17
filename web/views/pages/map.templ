@@ -1,0 +1,36 @@
+package pages
+
+import (
+	"workshop/internal/domain/sighting"
+	"workshop/web/views/components"
+	"workshop/web/views/layout"
+)
+
+templ Map(sightings []sighting.Sighting) {
+	@layout.Base(layout.BaseProps{
+		Title:       "Observation map",
+		Description: "Explore the recorded locations of wildlife observations in the AfriTour archive.",
+		CurrentPage: "map",
+	}) {
+		<section class="section map-section archive-page">
+			<div class="container section__header">
+				<div>
+					<div class="section__eyebrow">03 / RECORDED LOCATIONS</div>
+					<h1 class="section__title">Observations on the <em class="editorial-em">map</em></h1>
+					<p class="section__subtitle">Browse recorded locations. Select a marker to see its observation details.</p>
+				</div>
+				<a class="archive-page__back" href="/">← Archive home</a>
+			</div>
+			<div class="container">
+				<div class="map-card">
+					@components.Map(components.MapProps{
+						Points:  components.MapPoints(sightings),
+						Cluster: true,
+						Label:   "Wildlife observation map",
+						Class:   "map--dark",
+					})
+				</div>
+			</div>
+		</section>
+	}
+}

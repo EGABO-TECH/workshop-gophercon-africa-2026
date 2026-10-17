@@ -21,9 +21,11 @@ travel claims, invented weather, and promotional filler.
   Plus Jakarta Sans for interface text and JetBrains Mono for small field labels.
 - Favor fine rules, square image frames and restrained radii over glass panels, bright
   gradients and oversized rounded cards.
-- Keep navigation direct and point each item to a section on the homepage.
-- Follow this section order: photographs, records, map and trends. Use fluid type and
-  spacing; stack hero actions and summary figures on narrow screens.
+- Keep the homepage as a concise archive overview with direct links to separate
+  photographs, records, map and trends pages. All navigation uses same-window links.
+- Give each page the shared header, navigation and footer, with the current page
+  identified in the navigation. Use fluid type and spacing; stack hero actions and
+  summary figures on narrow screens.
 - Use clear focus outlines, descriptive image text and reduced-motion support.
 - Keep motion purposeful: reveal sections as they enter view, use subtle image movement
   on hover and avoid autoplay or motion that competes with the wildlife photography.

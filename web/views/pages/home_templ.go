@@ -11,7 +11,6 @@ import templruntime "github.com/a-h/templ/runtime"
 import (
 	"strconv"
 	"workshop/internal/domain/sighting"
-	"workshop/web/views/components"
 	"workshop/web/views/layout"
 )
 
@@ -37,9 +36,6 @@ func Home(sightings []sighting.Sighting) templ.Component {
 		}
 		ctx = templ.ClearChildren(ctx)
 		sum := sighting.Summarise(sightings)
-		byYear := sighting.CountByYear(sightings)
-		photoHighlights := withPhotos(sightings, 12)
-		comparePayload := components.BuildComparePayload(sightings)
 		templ_7745c5c3_Var2 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 			templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 			templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
@@ -52,14 +48,14 @@ func Home(sightings []sighting.Sighting) templ.Component {
 				}()
 			}
 			ctx = templ.InitializeContext(ctx)
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section id=\"hero\" class=\"field-hero\"><img class=\"field-hero__image\" src=\"/assets/images/hero-forest.jpg\" alt=\"Sunlight falling through a dense rainforest canopy\" fetchpriority=\"high\"><div class=\"field-hero__shade\" aria-hidden=\"true\"></div><div class=\"field-hero__frame\"><div class=\"field-hero__index\"><span>AFRITOUR</span> <span>FIELD ARCHIVE <i>01</i></span></div><div class=\"field-hero__content\"><p class=\"field-hero__eyebrow\">FIELD NOTES · 01</p><h1>Wildlife,<br><em>in the field.</em></h1><p class=\"field-hero__intro\">A living record of the species, places and people behind each observation.</p><div class=\"field-hero__links\"><a href=\"#sightings\" class=\"field-hero__primary\"><span>Browse observations</span> <svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M4 12h15M13 5l7 7-7 7\"></path></svg></a> <a href=\"#map-section\" class=\"field-hero__secondary\">Explore the map</a></div></div><div class=\"field-hero__stats\" aria-label=\"Archive summary\"><div><strong>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 1, "<section id=\"hero\" class=\"field-hero\"><img class=\"field-hero__image\" src=\"/assets/images/hero-forest.jpg\" alt=\"Sunlight falling through a dense rainforest canopy\" fetchpriority=\"high\"><div class=\"field-hero__shade\" aria-hidden=\"true\"></div><div class=\"field-hero__frame\"><div class=\"field-hero__index\"><span>AFRITOUR</span> <span>FIELD ARCHIVE <i>01</i></span></div><div class=\"field-hero__content\"><p class=\"field-hero__eyebrow\">FIELD NOTES · 01</p><h1>Wildlife,<br><em>in the field.</em></h1><p class=\"field-hero__intro\">A living record of the species, places and people behind each observation.</p><div class=\"field-hero__links\"><a href=\"/records\" class=\"field-hero__primary\"><span>Browse records</span> <svg aria-hidden=\"true\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.8\"><path d=\"M4 12h15M13 5l7 7-7 7\"></path></svg></a> <a href=\"/map\" class=\"field-hero__secondary\">Explore the map</a></div></div><div class=\"field-hero__stats\" aria-label=\"Archive summary\"><div><strong>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
 			var templ_7745c5c3_Var3 string
 			templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(sum.Sightings))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 43, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 40, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 			if templ_7745c5c3_Err != nil {
@@ -72,7 +68,7 @@ func Home(sightings []sighting.Sighting) templ.Component {
 			var templ_7745c5c3_Var4 string
 			templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(sum.Species))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 47, Col: 41}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 44, Col: 41}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
 			if templ_7745c5c3_Err != nil {
@@ -85,7 +81,7 @@ func Home(sightings []sighting.Sighting) templ.Component {
 			var templ_7745c5c3_Var5 string
 			templ_7745c5c3_Var5, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(sum.Countries))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 51, Col: 43}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 48, Col: 43}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var5))
 			if templ_7745c5c3_Err != nil {
@@ -98,255 +94,22 @@ func Home(sightings []sighting.Sighting) templ.Component {
 			var templ_7745c5c3_Var6 string
 			templ_7745c5c3_Var6, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(sum.Media))
 			if templ_7745c5c3_Err != nil {
-				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 55, Col: 39}
+				return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 52, Col: 39}
 			}
 			_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var6))
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</strong> <span>Media items</span></div></div><p class=\"field-hero__image-note\"><span>01 /</span> Rainforest canopy</p></div></section><section id=\"highlights\" class=\"section highlights reveal\"><div class=\"container section__header\"><div><div class=\"section__eyebrow\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><rect x=\"3\" y=\"3\" width=\"18\" height=\"18\" rx=\"2\" ry=\"2\"></rect> <circle cx=\"8.5\" cy=\"8.5\" r=\"1.5\"></circle> <polyline points=\"21 15 16 10 5 21\"></polyline></svg> Field photographs</div><h2 class=\"section__title\">Selected <em class=\"editorial-em\">observations</em></h2><p class=\"section__subtitle\">Photographs attached to records in the archive.</p></div><div class=\"section__actions\"><span class=\"section__hint\">Swipe to explore →</span></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "</strong> <span>Media items</span></div></div><p class=\"field-hero__image-note\"><span>01 /</span> Rainforest canopy</p></div></section><section class=\"section archive-portal\"><div class=\"container section__header\"><div><div class=\"section__eyebrow\">EXPLORE THE ARCHIVE</div><h2 class=\"section__title\">Four ways into the <em class=\"editorial-em\">field</em></h2><p class=\"section__subtitle\">Each collection has its own page. Choose a view to begin exploring.</p></div></div><nav class=\"container portal-grid\" aria-label=\"Explore the wildlife archive\"><a class=\"portal-card\" href=\"/photos\"><span class=\"portal-card__index\">01 / MEDIA</span> <strong>Photographs</strong> <span>Browse images attached to observations.</span> <span class=\"portal-card__arrow\" aria-hidden=\"true\">↗</span></a> <a class=\"portal-card\" href=\"/records\"><span class=\"portal-card__index\">02 / OBSERVATIONS</span> <strong>Records</strong> <span>Search species, locations and observers.</span> <span class=\"portal-card__arrow\" aria-hidden=\"true\">↗</span></a> <a class=\"portal-card\" href=\"/map\"><span class=\"portal-card__index\">03 / LOCATIONS</span> <strong>Map</strong> <span>See where observations were recorded.</span> <span class=\"portal-card__arrow\" aria-hidden=\"true\">↗</span></a> <a class=\"portal-card\" href=\"/trends\"><span class=\"portal-card__index\">04 / SUMMARY</span> <strong>Trends</strong> <span>Compare records across years and species.</span> <span class=\"portal-card__arrow\" aria-hidden=\"true\">↗</span></a></nav></section>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
-			}
-			if len(photoHighlights) > 0 {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 6, "<div class=\"highlights__slider-wrap\">")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Var7 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-					templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-					templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-					if !templ_7745c5c3_IsBuffer {
-						defer func() {
-							templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-							if templ_7745c5c3_Err == nil {
-								templ_7745c5c3_Err = templ_7745c5c3_BufErr
-							}
-						}()
-					}
-					ctx = templ.InitializeContext(ctx)
-					for _, s := range photoHighlights {
-						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "<div class=\"swiper-slide\">")
-						if templ_7745c5c3_Err != nil {
-							return templ_7745c5c3_Err
-						}
-						templ_7745c5c3_Err = components.SightingCard(s).Render(ctx, templ_7745c5c3_Buffer)
-						if templ_7745c5c3_Err != nil {
-							return templ_7745c5c3_Err
-						}
-						templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</div>")
-						if templ_7745c5c3_Err != nil {
-							return templ_7745c5c3_Err
-						}
-					}
-					return nil
-				})
-				templ_7745c5c3_Err = components.Swiper(components.SwiperProps{DesktopSlides: 3, Dark: true}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</div>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-			} else {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 10, "<div class=\"container\"><p class=\"section__subtitle\">No photographs are attached to the current records.</p></div>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 11, "</section><!-- Sightings Catalog & Filter Section --> <section id=\"sightings\" class=\"section sightings-section reveal\"><div class=\"container section__header\"><div><div class=\"section__eyebrow\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polygon points=\"22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3\"></polygon></svg> Observation archive</div><h2 class=\"section__title\">Wildlife <em class=\"editorial-em\">records</em></h2><p class=\"section__subtitle\">Filter records by species or country, or search by observer and species name.</p></div></div><div class=\"container\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = components.Filter(components.FilterProps{
-				Target: "sightings-list",
-				Search: true,
-				Groups: []components.FilterGroup{
-					{
-						Key:     "animal",
-						Label:   "Species",
-						Options: components.FilterOptions(sightings, 10, components.Animal),
-					},
-					{
-						Key:     "country",
-						Label:   "Countries",
-						Options: components.FilterOptions(sightings, 8, components.Country),
-					},
-				},
-			}).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			if len(sightings) == 0 {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 12, "<div class=\"empty-state\"><svg width=\"48\" height=\"48\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"1.5\"><circle cx=\"12\" cy=\"12\" r=\"10\"></circle> <line x1=\"8\" y1=\"12\" x2=\"16\" y2=\"12\"></line></svg><h3>No observations in the archive</h3><p>Records will appear here when they are available.</p></div>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-			} else {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 13, "<ul id=\"sightings-list\" class=\"sightings-grid\">")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				for _, s := range sightings {
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 14, "<li class=\"sightings-grid__item\"")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					templ_7745c5c3_Err = templ.RenderAttributes(ctx, templ_7745c5c3_Buffer, components.FilterAttrs(s))
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 15, ">")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					templ_7745c5c3_Err = components.SightingCard(s).Render(ctx, templ_7745c5c3_Buffer)
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-					templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 16, "</li>")
-					if templ_7745c5c3_Err != nil {
-						return templ_7745c5c3_Err
-					}
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 17, "</ul>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 18, "</div></section><section id=\"map-section\" class=\"section map-section reveal\"><div class=\"container section__header\"><div><div class=\"section__eyebrow\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><polygon points=\"1 6 1 22 8 18 16 22 23 18 23 2 16 6 8 2 1 6\"></polygon> <line x1=\"8\" y1=\"2\" x2=\"8\" y2=\"18\"></line> <line x1=\"16\" y1=\"6\" x2=\"16\" y2=\"22\"></line></svg> Across the archive</div><h2 class=\"section__title\">Observations on the <em class=\"editorial-em\">map</em></h2><p class=\"section__subtitle\">Browse recorded locations. Select a marker to see its observation details.</p></div></div><div class=\"container\"><div class=\"map-card\">")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = components.Map(components.MapProps{
-				Points:  components.MapPoints(sightings),
-				Cluster: true,
-				Label:   "Wildlife observation map",
-				Class:   "map--dark",
-			}).Render(ctx, templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 19, "</div></div></section>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			if len(sightings) > 0 {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 20, "<section id=\"analytics\" class=\"section analytics-section reveal\"><div class=\"container section__header\"><div><div class=\"section__eyebrow\"><svg width=\"14\" height=\"14\" viewBox=\"0 0 24 24\" fill=\"none\" stroke=\"currentColor\" stroke-width=\"2\"><line x1=\"18\" y1=\"20\" x2=\"18\" y2=\"10\"></line> <line x1=\"12\" y1=\"20\" x2=\"12\" y2=\"4\"></line> <line x1=\"6\" y1=\"20\" x2=\"6\" y2=\"14\"></line></svg> Archive summary</div><h2 class=\"section__title\">Records over <em class=\"editorial-em\">time</em></h2><p class=\"section__subtitle\">A summary of recorded observations from ")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				var templ_7745c5c3_Var8 string
-				templ_7745c5c3_Var8, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(sum.Earliest.Year()))
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 190, Col: 109}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var8))
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 21, " through ")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				var templ_7745c5c3_Var9 string
-				templ_7745c5c3_Var9, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(sum.Latest.Year()))
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 190, Col: 153}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var9))
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 22, ".</p></div></div><div class=\"container\"><div class=\"analytics-grid\"><!-- Timeline Card --><div class=\"analytics-card analytics-card--wide\"><div class=\"analytics-card__header\"><h3>Observation Timeline</h3><span class=\"analytics-card__badge\">")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				var templ_7745c5c3_Var10 string
-				templ_7745c5c3_Var10, templ_7745c5c3_Err = templ.JoinStringErrs(strconv.Itoa(sum.Sightings))
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 199, Col: 72}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var10))
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 23, " Total Records</span></div><p class=\"analytics-card__desc\">Recorded observations by year.</p>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = components.Sparkline(byYear, sum).Render(ctx, templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 24, "<div class=\"analytics-card__footer\"><span>Earliest: ")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				var templ_7745c5c3_Var11 string
-				templ_7745c5c3_Var11, templ_7745c5c3_Err = templ.JoinStringErrs(sum.Earliest.Format("02 Jan 2006"))
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 204, Col: 59}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var11))
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 25, "</span> <span>Latest: ")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				var templ_7745c5c3_Var12 string
-				templ_7745c5c3_Var12, templ_7745c5c3_Err = templ.JoinStringErrs(sum.Latest.Format("02 Jan 2006"))
-				if templ_7745c5c3_Err != nil {
-					return templ.Error{Err: templ_7745c5c3_Err, FileName: `web/views/pages/home.templ`, Line: 205, Col: 55}
-				}
-				_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var12))
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 26, "</span></div></div><!-- Species Leaderboard --><div class=\"analytics-card\"><div class=\"analytics-card__header\"><h3>Most recorded species</h3><span class=\"analytics-card__badge\">Top 5</span></div>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = components.Bars(topSpecies(sightings, 5)).Render(ctx, templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 27, "</div><!-- Territories Leaderboard --><div class=\"analytics-card\"><div class=\"analytics-card__header\"><h3>Countries with most records</h3><span class=\"analytics-card__badge\">Top 5</span></div>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = components.Bars(topCountries(sightings, 5)).Render(ctx, templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 28, "</div></div></div></section>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-			} else {
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 29, "<section id=\"analytics\" class=\"section analytics-section reveal\"><div class=\"container\"><div class=\"empty-state\"><h2 class=\"section__title\">The archive is <em class=\"editorial-em\">quiet</em></h2><p class=\"section__subtitle\">Record trends will appear when observations are available.</p></div></div></section>")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 30, " ")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			if len(sightings) > 0 {
-				templ_7745c5c3_Err = components.CompareSection(comparePayload).Render(ctx, templ_7745c5c3_Buffer)
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
 			}
 			return nil
 		})
 		templ_7745c5c3_Err = layout.Base(layout.BaseProps{
 			Title:       "Wildlife field archive",
 			Description: "Explore wildlife observations, field photographs, locations and trends from the AfriTour archive.",
+			CurrentPage: "home",
 		}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var2), templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err

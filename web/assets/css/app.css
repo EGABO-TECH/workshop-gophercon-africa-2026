@@ -4023,6 +4023,101 @@ body,
   border-color: var(--border-subtle);
 }
 
+.site-nav__link[aria-current="page"] {
+  color: var(--color-gold-300);
+}
+
+.site-nav__link[aria-current="page"]::after {
+  width: 100%;
+}
+
+.mobile-nav__link[aria-current="page"] {
+  color: var(--color-gold-300);
+}
+
+.archive-portal {
+  background: var(--bg-primary);
+}
+
+.portal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 230px), 1fr));
+  gap: 1px;
+  border: 1px solid var(--border-subtle);
+  background: var(--border-subtle);
+}
+
+.portal-card {
+  position: relative;
+  display: flex;
+  min-height: 220px;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(22px, 3vw, 34px);
+  background: var(--bg-secondary);
+  color: var(--text-main);
+  transition: background-color var(--transition-fast), color var(--transition-fast);
+}
+
+.portal-card:hover {
+  background: var(--bg-surface);
+  color: var(--text-main);
+}
+
+.portal-card:focus-visible,
+.archive-page__back:focus-visible {
+  outline: 3px solid var(--color-gold-400);
+  outline-offset: 4px;
+}
+
+.portal-card__index {
+  color: var(--color-gold-400);
+  font: 500 0.68rem/1.4 var(--font-mono);
+  letter-spacing: 0.12em;
+}
+
+.portal-card strong {
+  font: 600 clamp(1.5rem, 2.4vw, 2rem)/1.1 var(--font-display);
+}
+
+.portal-card > span:nth-last-child(2) {
+  max-width: 28ch;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.portal-card__arrow {
+  position: absolute;
+  right: 24px;
+  bottom: 24px;
+  color: var(--color-gold-400);
+}
+
+.archive-page {
+  min-height: 70vh;
+}
+
+.archive-page__back {
+  flex: 0 0 auto;
+  color: var(--text-muted);
+  font-size: 0.875rem;
+}
+
+.archive-page__back:hover {
+  color: var(--color-gold-300);
+}
+
+@media (max-width: 700px) {
+  .archive-page .section__header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .portal-card {
+    min-height: 190px;
+  }
+}
+
 [data-theme="light"] .site-footer__heading,
 [data-theme="light"] .site-footer__title,
 [data-theme="light"] .site-footer__bottom {

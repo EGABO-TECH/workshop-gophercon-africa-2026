@@ -7,7 +7,6 @@ import (
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
-	"strings"
 	"testing"
 	"workshop/internal/common/logs"
 	"workshop/internal/domain/sighting"
@@ -32,17 +31,10 @@ func TestHome(t *testing.T) {
 		assert.Zero(t, gotFilter.Limit)
 
 		body := got.Body.String()
-		lastSection := -1
-		for _, section := range []string{
-			`id="highlights"`,
-			`id="sightings"`,
-			`id="map-section"`,
-			`id="analytics"`,
-		} {
-			position := strings.Index(body, section)
-			assert.Greater(t, position, lastSection, "expected homepage section %s in editorial order", section)
-			lastSection = position
+		for _, path := range []string{"/photos", "/records", "/map", "/trends"} {
+			assert.Contains(t, body, `href="`+path+`"`)
 		}
+		assert.NotContains(t, body, `id="map-section"`)
 	})
 
 	t.Run("No sightings", func(t *testing.T) {
@@ -50,8 +42,7 @@ func TestHome(t *testing.T) {
 
 		got := serveHome(t, fakeLister{})
 		assert.Equal(t, http.StatusOK, got.Code)
-		assert.Contains(t, got.Body.String(), "id=\"analytics\"")
-		assert.Contains(t, got.Body.String(), "Record trends will appear when observations are available.")
+		assert.Contains(t, got.Body.String(), "portal-grid")
 		assert.NotContains(t, got.Body.String(), "0001")
 	})
 
@@ -62,6 +53,36 @@ func TestHome(t *testing.T) {
 		assert.Equal(t, http.StatusInternalServerError, got.Code)
 		assert.Equal(t, "text/html; charset=utf-8", got.Header().Get("Content-Type"))
 	})
+}
+
+func TestArchivePages(t *testing.T) {
+	t.Parallel()
+
+	for _, tc := range []struct {
+		name    string
+		handler func(*slog.Logger, handlers.SightingsLister) http.HandlerFunc
+		heading string
+	}{
+		{name: "photos", handler: handlers.Photos, heading: "Images from the"},
+		{name: "records", handler: handlers.Records, heading: "Wildlife"},
+		{name: "map", handler: handlers.Map, heading: "Observations on the"},
+		{name: "trends", handler: handlers.Trends, heading: "Records over"},
+	} {
+		t.Run(tc.name, func(t *testing.T) {
+			t.Parallel()
+
+			logger := logs.NewProduction(io.Discard, slog.LevelError)
+			rec := httptest.NewRecorder()
+			tc.handler(logger, fakeLister{items: []sighting.Sighting{
+				{GBIFKey: 1, Species: species.Species{VernacularName: "lion"}},
+			}})(rec, httptest.NewRequest(http.MethodGet, "/"+tc.name, nil))
+
+			assert.Equal(t, http.StatusOK, rec.Code)
+			assert.Equal(t, "text/html; charset=utf-8", rec.Header().Get("Content-Type"))
+			assert.Contains(t, rec.Body.String(), tc.heading)
+			assert.Contains(t, rec.Body.String(), `aria-current="page"`)
+		})
+	}
 }
 
 type fakeLister struct {
