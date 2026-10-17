@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: workshop-gophercon-africa-2026
+    runtime: docker
+    plan: free
+    dockerfilePath: ./Dockerfile
+    dockerContext: .
+    healthCheckPath: /
+    envVars:
+      - key: APP_ENV
+        value: production
+      - key: DB_URI
+        value: file:/app/workshop.db
