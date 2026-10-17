@@ -7,6 +7,7 @@ import (
 	"log/slog"
 	"net/http"
 	"net/http/httptest"
+	"strings"
 	"testing"
 	"workshop/internal/common/logs"
 	"workshop/internal/domain/sighting"
@@ -22,11 +23,26 @@ func TestHome(t *testing.T) {
 	t.Run("OK", func(t *testing.T) {
 		t.Parallel()
 
-		got := serveHome(t, fakeLister{items: []sighting.Sighting{
+		var gotFilter sighting.ListFilter
+		got := serveHome(t, fakeLister{filter: &gotFilter, items: []sighting.Sighting{
 			{GBIFKey: 1, Species: species.Species{VernacularName: "lion"}},
 		}})
 		assert.Equal(t, http.StatusOK, got.Code)
 		assert.Equal(t, "text/html; charset=utf-8", got.Header().Get("Content-Type"))
+		assert.Zero(t, gotFilter.Limit)
+
+		body := got.Body.String()
+		lastSection := -1
+		for _, section := range []string{
+			`id="highlights"`,
+			`id="sightings"`,
+			`id="map-section"`,
+			`id="analytics"`,
+		} {
+			position := strings.Index(body, section)
+			assert.Greater(t, position, lastSection, "expected homepage section %s in editorial order", section)
+			lastSection = position
+		}
 	})
 
 	t.Run("No sightings", func(t *testing.T) {
@@ -34,6 +50,9 @@ func TestHome(t *testing.T) {
 
 		got := serveHome(t, fakeLister{})
 		assert.Equal(t, http.StatusOK, got.Code)
+		assert.Contains(t, got.Body.String(), "id=\"analytics\"")
+		assert.Contains(t, got.Body.String(), "Record trends will appear when observations are available.")
+		assert.NotContains(t, got.Body.String(), "0001")
 	})
 
 	t.Run("List error", func(t *testing.T) {
@@ -46,11 +65,15 @@ func TestHome(t *testing.T) {
 }
 
 type fakeLister struct {
-	items []sighting.Sighting
-	err   error
+	items  []sighting.Sighting
+	err    error
+	filter *sighting.ListFilter
 }
 
-func (f fakeLister) List(context.Context, sighting.ListFilter) ([]sighting.Sighting, error) {
+func (f fakeLister) List(_ context.Context, filter sighting.ListFilter) ([]sighting.Sighting, error) {
+	if f.filter != nil {
+		*f.filter = filter
+	}
 	return f.items, f.err
 }
 

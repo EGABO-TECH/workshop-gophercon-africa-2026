@@ -7,6 +7,30 @@
 .idea/
 *.swp
 *~
+.venv/
+
+# Local build output and incomplete downloads
+/afritour.exe
+assets/*.crdownload
+
+# Skill mirrors provisioned by local AI coding tools
+/.agents/skills/
+/.augment/skills/
+/.codebuddy/skills/
+/.codex/skills/
+/.continue/skills/
+/.cursor/skills/
+/.factory/skills/
+/.gemini/skills/
+/.github/prompts/
+/.kilocode/skills/
+/.kiro/steering/
+/.opencode/skills/
+/.qoder/skills/
+/.roo/skills/
+/.trae/skills/
+/.warp/skills/
+/.windsurf/skills/
 
 # Environment / secrets
 .env

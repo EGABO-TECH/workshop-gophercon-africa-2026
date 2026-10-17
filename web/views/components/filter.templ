@@ -1,0 +1,50 @@
+package components
+
+import "workshop/internal/domain/sighting"
+
+type FilterProps struct {
+	Target string        // The id of the list whose items are filtered.
+	Search bool          // A search box too, matching each item's data-search.
+	Groups []FilterGroup // A row of chips each.
+}
+
+type FilterGroup struct {
+	Key     string // The data attribute on each item: "animal" reads data-animal.
+	Label   string
+	Options []sighting.Tally // Each name and how many items carry it, from FilterOptions.
+}
+
+templ Filter(props FilterProps) {
+	<form class="filter" data-filter={ props.Target } role="search" hidden>
+		if props.Search {
+			<div class="filter__search-box">
+				<svg class="filter__search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+					<circle cx="11" cy="11" r="8"></circle>
+					<line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+				</svg>
+				<label class="visually-hidden" for="sightings-search">Search observations</label>
+				<input id="sightings-search" type="search" name="q" placeholder="Search animal, location, observer or species…" autocomplete="off"/>
+			</div>
+		}
+		<div class="filter__groups">
+			for _, g := range props.Groups {
+				<fieldset class="filter__group">
+					<legend>{ g.Label }</legend>
+					<div class="filter__chips">
+						for _, o := range g.Options {
+							<label class="chip">
+								<input type="checkbox" name={ g.Key } value={ o.Name }/>
+								<span class="chip__label">{ o.Name }</span>
+								<small class="chip__count">{ o.Count }</small>
+							</label>
+						}
+					</div>
+				</fieldset>
+			}
+		</div>
+		<p class="filter__status">
+			<output class="filter__count" aria-live="polite"></output>
+			<button type="reset" class="filter__reset">Clear Filters</button>
+		</p>
+	</form>
+}

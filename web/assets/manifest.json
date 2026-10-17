@@ -1,0 +1,15 @@
+{
+  "name": "AfriTour Wildlife Field Archive",
+  "short_name": "AfriTour",
+  "icons": [
+    {
+      "src": "/assets/images/afritour-safari-sunset-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ],
+  "theme_color": "#111812",
+  "background_color": "#111812",
+  "display": "standalone"
+}

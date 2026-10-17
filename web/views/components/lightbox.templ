@@ -1,0 +1,13 @@
+package components
+
+templ Lightbox() {
+	<dialog id="lightbox" class="lightbox" aria-label="Photo Lightbox">
+		<form method="dialog">
+			<button class="lightbox__close" aria-label="Close dialog">×</button>
+		</form>
+		<figure class="lightbox__figure">
+			<img class="lightbox__image" alt="African wildlife expanded view"/>
+			<figcaption class="lightbox__caption" hidden></figcaption>
+		</figure>
+	</dialog>
+}

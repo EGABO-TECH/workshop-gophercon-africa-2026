@@ -1,0 +1,32 @@
+package components
+
+templ SavedRecordsModal() {
+	<dialog id="wishlist-modal" class="afritour-modal afritour-modal--drawer" aria-labelledby="wishlist-title">
+		<div class="drawer-card">
+			<header class="drawer-card__header">
+				<div class="drawer-card__title-row">
+					<h2 id="wishlist-title" class="drawer-card__title">Saved observations</h2>
+					<button type="button" class="modal-card__close" aria-label="Close saved observations" onclick="document.getElementById('wishlist-modal').close()">
+						<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<line x1="18" y1="6" x2="6" y2="18"></line>
+							<line x1="6" y1="6" x2="18" y2="18"></line>
+						</svg>
+					</button>
+				</div>
+				<p class="drawer-card__subtitle">Saved in this browser only.</p>
+			</header>
+			<div class="drawer-card__body">
+				<div id="wishlist-empty" class="wishlist-empty">
+					<h3>No saved observations</h3>
+					<p>Use the save button on an observation to keep it here.</p>
+				</div>
+				<ul id="wishlist-items-list" class="wishlist-items-list"></ul>
+			</div>
+			<footer class="drawer-card__footer" id="wishlist-footer">
+				<button type="button" class="btn btn--secondary btn--sm" onclick="window.AfriTourWishlist && window.AfriTourWishlist.clear()">
+					Clear saved observations
+				</button>
+			</footer>
+		</div>
+	</dialog>
+}

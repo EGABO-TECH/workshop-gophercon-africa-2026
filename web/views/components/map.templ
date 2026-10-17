@@ -1,0 +1,26 @@
+package components
+
+import "cmp"
+
+type MapProps struct {
+	Points  []MapPoint
+	ID      string // The id of the JSON the map reads; "map-points" when empty.
+	Cluster bool   // Group nearby markers with Leaflet.markercluster.
+	Heat    bool   // Draw density heat map with Leaflet.heat.
+	Label   string // What the map shows, for screen readers.
+	Class   string
+}
+
+templ Map(props MapProps) {
+	<div
+		class={ "map", props.Class }
+		data-map={ cmp.Or(props.ID, "map-points") }
+		data-cluster?={ props.Cluster }
+		data-heat?={ props.Heat }
+		role="region"
+		aria-label={ cmp.Or(props.Label, "Map of African Wildlife Sightings") }
+	>
+		<p class="map__fallback" role="status" aria-live="polite">Loading observation locations…</p>
+	</div>
+	@templ.JSONScript(cmp.Or(props.ID, "map-points"), props.Points)
+}

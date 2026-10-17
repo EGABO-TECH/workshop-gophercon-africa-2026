@@ -1,0 +1,197 @@
+/* block: filter — copy to web/assets/css/filter.css. See filter.md. */
+
+/* Tune from the site's own tokens, on :root or on one .filter:
+     --chip-bg, --chip-fg                a chip at rest
+     --chip-active-bg, --chip-active-fg  a ticked chip */
+
+/* The hidden attribute loses to any display rule on the item, so put it back on top. */
+[hidden] {
+	display: none !important;
+}
+
+.filter {
+	display: grid;
+	gap: 1rem;
+	margin: 0 0 1.75rem;
+	padding: clamp(0.875rem, 2.5vw, 1.25rem);
+	border: 1px solid var(--border-subtle);
+	border-radius: var(--radius-md, 16px);
+	background: var(--bg-card, #121c27);
+	color: var(--text-main, inherit);
+	box-shadow: var(--shadow-sm, none);
+}
+
+.filter__search-box {
+	position: relative;
+	width: 100%;
+}
+
+.filter__search-icon {
+	position: absolute;
+	top: 50%;
+	left: 0.9rem;
+	color: var(--text-muted, currentColor);
+	transform: translateY(-50%);
+	pointer-events: none;
+}
+
+.filter__search-box input {
+	width: 100%;
+	min-height: 2.75rem;
+	padding: 0.65rem 0.9rem 0.65rem 2.75rem;
+	border: 1px solid var(--border-subtle, currentColor);
+	border-radius: var(--radius-sm, 10px);
+	background: var(--bg-primary, transparent);
+	color: var(--text-main, inherit);
+	font: inherit;
+}
+
+.filter__search-box input::placeholder {
+	color: var(--text-muted, currentColor);
+	opacity: 0.85;
+}
+
+.filter__search input {
+	width: 100%;
+	max-width: 24rem;
+	padding: 0.5rem 0.9rem;
+	border: 1px solid currentColor;
+	border-radius: 999px;
+	background: transparent;
+	color: inherit;
+	font: inherit;
+}
+
+.filter__groups {
+	display: grid;
+	grid-template-columns: repeat(2, minmax(0, 1fr));
+	gap: 1rem 1.5rem;
+}
+
+.filter__group {
+	display: grid;
+	gap: 0.55rem;
+	min-width: 0;
+	margin: 0;
+	padding: 0;
+	border: 0;
+}
+
+.filter__group legend {
+	padding: 0;
+	color: var(--text-muted, currentColor);
+	font-weight: 700;
+	font-size: 0.8125rem;
+	line-height: 1.3;
+	letter-spacing: 0.05em;
+	text-transform: uppercase;
+}
+
+.filter__chips {
+	display: flex;
+	flex-wrap: wrap;
+	gap: 0.5rem;
+	min-width: 0;
+}
+
+/* Phones: one row that scrolls sideways rather than wrapping into a wall. */
+@media (max-width: 640px) {
+	.filter__groups {
+		grid-template-columns: minmax(0, 1fr);
+		gap: 0.85rem;
+	}
+
+	.filter__chips {
+		flex-wrap: nowrap;
+		overflow-x: auto;
+		padding: 0.25rem 0.15rem 0.5rem;
+		scroll-snap-type: x proximity;
+		scrollbar-width: none;
+		overscroll-behavior-inline: contain;
+	}
+
+	.filter__chips::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+.chip {
+	position: relative;
+	display: inline-flex;
+	align-items: center;
+	gap: 0.35em;
+	min-height: 2.5rem;
+	padding: 0.4rem 0.8rem;
+	border: 1px solid var(--border-subtle, currentColor);
+	border-radius: 999px;
+	background: var(--chip-bg, var(--bg-surface, transparent));
+	color: var(--chip-fg, inherit);
+	font-size: 0.875rem;
+	white-space: nowrap;
+	cursor: pointer;
+	user-select: none;
+	scroll-snap-align: start;
+	transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease;
+}
+
+/* The checkbox is there for the keyboard and the screen reader; the chip is what shows. */
+.chip input {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	opacity: 0;
+	pointer-events: none;
+}
+
+.chip small {
+	opacity: 0.6;
+}
+
+.chip:has(input:checked) {
+	background: var(--chip-active-bg, var(--color-gold-500, #1a1a1a));
+	border-color: var(--chip-active-bg, var(--color-gold-500, #1a1a1a));
+	color: var(--chip-active-fg, #080d11);
+}
+
+[data-theme="light"] .chip:has(input:checked) {
+	color: #080d11;
+}
+
+.chip:has(input:focus-visible) {
+	outline: 2px solid currentColor;
+	outline-offset: 2px;
+}
+
+.filter__status {
+	display: flex;
+	align-items: center;
+	gap: 1rem;
+	margin: 0;
+	font-size: 0.875rem;
+}
+
+.filter__status button {
+	min-height: 2.5rem;
+	padding: 0.25rem 0.75rem;
+	border: 1px solid var(--border-subtle, currentColor);
+	border-radius: 999px;
+	background: var(--bg-surface, transparent);
+	color: inherit;
+	font: inherit;
+	cursor: pointer;
+	transition: background-color 160ms ease, border-color 160ms ease;
+}
+
+.filter__status button:hover {
+	border-color: var(--color-gold-500, currentColor);
+}
+
+/* The search box's label, for screen readers only. Drop it if the site has one. */
+.filter .visually-hidden {
+	position: absolute;
+	width: 1px;
+	height: 1px;
+	overflow: hidden;
+	clip-path: inset(50%);
+	white-space: nowrap;
+}

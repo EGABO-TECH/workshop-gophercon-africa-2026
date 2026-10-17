@@ -1,4 +1,4 @@
-package main
+gopackage main
 
 import (
 	"context"

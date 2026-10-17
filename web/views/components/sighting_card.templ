@@ -11,38 +11,124 @@ import (
 )
 
 templ SightingCard(s sighting.Sighting) {
-	<article class="card">
-		<!-- Header -->
-		<header class="card__header">
-			<h2>{ displayName(s.Species) }</h2>
-			if s.Species.ScientificName != "" {
-				<p class="card__scientific">{ s.Species.ScientificName }</p>
-			}
-		</header>
-		<!-- Meta -->
-		<dl class="card__meta">
-			<dt>Seen</dt>
-			<dd>{ s.HappenedAt.Format("2 January 2006") }</dd>
-			<dt>Where</dt>
-			<dd>{ place(s.Location) }</dd>
-			if s.IndividualCount != nil {
-				<dt>Count</dt>
-				<dd>{ individuals(*s.IndividualCount) }</dd>
-			}
-			if s.RecordedBy != "" {
-				<dt>Recorded by</dt>
-				<dd>{ s.RecordedBy }</dd>
-			}
-		</dl>
-		<!-- Gallery -->
+	{{ photoURL := firstPhoto(s.Media) }}
+	{{ dispName := displayName(s.Species) }}
+	{{ placeStr := place(s.Location) }}
+	<article class="card" id={ Anchor(s) } data-sighting-id={ s.ID.String() }>
+		<!-- Gallery with save-record button -->
 		<div class="card__gallery">
 			@Gallery(s.Media)
+			<button type="button" 
+					class="card__wishlist-btn" 
+					aria-label="Save this observation" 
+					title="Save this observation"
+					onclick={ toggleWishlistItem(s.ID.String(), dispName, placeStr, photoURL) }>
+				<svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+					<path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
+				</svg>
+			</button>
+		</div>
+		<!-- Card Body -->
+		<div class="card__content">
+			<!-- Header -->
+			<header class="card__header">
+				<div class="card__badges">
+					if s.Location.Country != "" {
+						<span class="card__badge card__badge--country">
+							<img src={ "https://flagcdn.com/w40/" + flagCode(string(s.Location.CountryCode)) + ".png" } alt="" class="flag-micro" width="14" height="10"/>
+							{ s.Location.Country }
+						</span>
+					}
+					if isAfricanAnimal(s.Species) {
+						<span class="card__badge card__badge--african">African Wildlife</span>
+					}
+				</div>
+				<h3 class="card__title">{ dispName }</h3>
+				if s.Species.ScientificName != "" {
+					<p class="card__scientific">{ s.Species.ScientificName }</p>
+				}
+			</header>
+			<!-- Weather readout -->
+			<div class="card__weather-row">
+				@Weather(s.Weather)
+			</div>
+			<!-- Meta Info -->
+			<dl class="card__meta">
+				<div class="card__meta-item">
+					<dt>
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+							<line x1="16" y1="2" x2="16" y2="6"></line>
+							<line x1="8" y1="2" x2="8" y2="6"></line>
+							<line x1="3" y1="10" x2="21" y2="10"></line>
+						</svg>
+						Date
+					</dt>
+					<dd>{ s.HappenedAt.Format("02 Jan 2006") }</dd>
+				</div>
+				<div class="card__meta-item">
+					<dt>
+						<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+							<path d="M12 2a8 8 0 0 0-8 8c0 5.25 8 12 8 12s8-6.75 8-12a8 8 0 0 0-8-8z"></path>
+							<circle cx="12" cy="10" r="3"></circle>
+						</svg>
+						Location
+					</dt>
+					<dd>{ placeStr }</dd>
+				</div>
+				if s.IndividualCount != nil {
+					<div class="card__meta-item">
+						<dt>
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+								<circle cx="9" cy="7" r="4"></circle>
+								<path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+								<path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+							</svg>
+							Count
+						</dt>
+						<dd>{ individuals(*s.IndividualCount) }</dd>
+					</div>
+				}
+				if s.RecordedBy != "" {
+					<div class="card__meta-item">
+						<dt>
+							<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+								<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+								<circle cx="12" cy="7" r="4"></circle>
+							</svg>
+							Observer
+						</dt>
+						<dd>{ s.RecordedBy }</dd>
+					</div>
+				}
+			</dl>
 		</div>
 	</article>
 }
 
-// displayName prefers the name a reader would recognise, falling back
-// through the taxonomy as GBIF records thin out.
+func firstPhoto(media []sighting.Media) string {
+	for _, m := range media {
+		if m.Type == "StillImage" && m.URL != "" {
+			return m.URL
+		}
+	}
+	return ""
+}
+
+script toggleWishlistItem(id string, title string, loc string, photo string) {
+	if (window.AfriTourWishlist) {
+		window.AfriTourWishlist.toggle({
+			id: id,
+			title: title,
+			location: loc,
+			type: 'Sighting',
+			img: photo
+		});
+	}
+}
+
+// displayName prefers the name a reader would recognise.
 func displayName(sp species.Species) string {
 	return cmp.Or(sp.VernacularName, sp.CanonicalName, sp.ScientificName, "Unknown species")
 }
@@ -53,13 +139,25 @@ func place(l sighting.Location) string {
 		[]string{l.Locality, l.StateProvince, l.Country},
 		func(s string) bool { return s == "" },
 	)
-	return cmp.Or(strings.Join(parts, ", "), "Location unknown")
+	return cmp.Or(strings.Join(parts, ", "), "Location unrecorded")
 }
 
 // individuals renders how many animals were seen in a single sighting.
 func individuals(n int) string {
 	if n == 1 {
-		return "1 individual"
+		return "1 animal"
 	}
-	return fmt.Sprintf("%d individuals", n)
+	return fmt.Sprintf("%d animals", n)
+}
+
+func isAfricanAnimal(sp species.Species) bool {
+	vern := strings.ToLower(sp.VernacularName)
+	scie := strings.ToLower(sp.ScientificName)
+	keywords := []string{"lion", "leopard", "cheetah", "elephant", "rhino", "giraffe", "zebra", "hippo", "buffalo", "hyena", "wild dog", "wildebeest", "impala", "warthog", "crocodile", "gorilla", "chimpanzee", "penguin", "shoebill", "flamingo"}
+	for _, k := range keywords {
+		if strings.Contains(vern, k) || strings.Contains(scie, k) {
+			return true
+		}
+	}
+	return false
 }
